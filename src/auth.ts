@@ -1,11 +1,8 @@
-// src/auth.ts
 import { Client, Account } from "appwrite";
 
-const client = new Client();
-
-client
-  .setEndpoint("https://fra.cloud.appwrite.io/v1")
-  .setProject("6881e0410026d2cfaca1");
+const client = new Client()
+  .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT!)
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID!);
 
 export const account = new Account(client);
 
@@ -17,13 +14,9 @@ export const login = async ({
   password: string;
 }) => {
   try {
-    await account.deleteSession("current"); // ✅ safe attempt
+    await account.deleteSession("current");
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.warn("No existing session to delete:", err.message);
-    } else {
-      console.warn("Unknown error occurred");
-    }
+    console.warn("Session cleanup:", err);
   }
 
   return await account.createEmailPasswordSession(email, password);
@@ -41,13 +34,9 @@ export const createAccount = async ({
   await account.create("unique()", email, password, name);
 
   try {
-    await account.deleteSession("current"); // ✅ safe attempt
+    await account.deleteSession("current");
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.warn("No existing session to delete:", err.message);
-    } else {
-      console.warn("Unknown error occurred");
-    }
+    console.warn("Session cleanup:", err);
   }
 
   return await account.createEmailPasswordSession(email, password);

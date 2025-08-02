@@ -12,8 +12,9 @@ import type { Columns, Task } from "../types/types";
 import { databases, ID } from "../appwrite";
 import { toast } from "sonner";
 
-const DATABASE_ID = "6881e1a100261dde8f26";
-const COLLECTION_ID = "6881e1bc0017a8a6bc25";
+const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID!;
+const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID!;
+
 
 export default function KanbanBoard() {
   const [columns, setColumns] = useState<Columns>({
