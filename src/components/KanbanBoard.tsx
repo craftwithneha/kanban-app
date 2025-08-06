@@ -215,7 +215,7 @@ export default function KanbanBoard() {
     <DndContext onDragEnd={handleDragEnd}>
       <div className="py-10 px-4 sm:px-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2 animate-fade-in-up">
-          Kanban Board <Star className="w-5 h-5 text-yellow-600" />
+          Kanban Board <Star className="w-7 h-7 text-blue-400" />
         </h1>
 
         <div className="flex flex-col sm:flex-row gap-6">

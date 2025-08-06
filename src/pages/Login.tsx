@@ -37,7 +37,7 @@ export default function Login() {
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded focus:ring-blue-300"
           value={credentials.email}
           onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
           required
@@ -45,17 +45,17 @@ export default function Login() {
         <input
           type="password"
           placeholder="Password"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded focus:ring-blue-300"
           value={credentials.password}
           onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
           required
         />
-        <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        <button type="submit" disabled={loading} className="w-full bg-blue-400 text-white py-2 rounded hover:bg-blue-500">
           {loading ? "Signing In..." : "Sign In"}
         </button>
         <p className="text-sm text-center">
           Don’t have an account?{" "}
-          <Link to="/signup" className="text-blue-600 hover:underline">Sign Up</Link>
+          <Link to="/signup" className="text-blue-500 hover:underline">Sign Up</Link>
         </p>
       </form>
     </div>

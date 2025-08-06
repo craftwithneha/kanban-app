@@ -87,20 +87,20 @@ export default function Column({ id, title, children, onAddTask }: ColumnProps) 
           <div className="mb-4 bg-white p-4 rounded-lg shadow-sm text-sm ring-1 ring-gray-200 border-gray-200 animate-fade-in space-y-2">
             <input
               placeholder="Project Name"
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               value={task.title}
               onChange={(e) => setTask({ ...task, title: e.target.value })}
             />
             <textarea
               placeholder="Description"
-              className="w-full border border-gray-300 p-2 rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="w-full border border-gray-300 p-2 rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-300"
               rows={2}
               value={task.description}
               onChange={(e) => setTask({ ...task, description: e.target.value })}
             />
             <input
               type="date"
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               value={task.date}
               onChange={(e) => setTask({ ...task, date: e.target.value })}
             />

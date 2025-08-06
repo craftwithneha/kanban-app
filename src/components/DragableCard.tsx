@@ -1,7 +1,4 @@
 
-
-
-
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TaskCard from "./TaskCard";
@@ -37,6 +34,8 @@ export default function DraggableCard({ item, columnId, users }: DraggableCardPr
       : "0 2px 6px rgba(0, 0, 0, 0.05)",
     borderRadius: "12px",
   };
+
+  
 
   return (
     <div

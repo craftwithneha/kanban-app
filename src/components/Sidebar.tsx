@@ -32,7 +32,7 @@ export default function Sidebar() {
             {navItems.map(({ label, icon: Icon, active }) => (
               <button
                 key={label}
-                className={`flex items-center gap-3 px-4 py-2 rounded-md w-full text-left transition-all ${
+                className={`flex items-center gap-3 px-4 py-2 cursor-pointer rounded-md w-full text-left transition-all ${
                   active
                     ? "bg-blue-50 text-blue-400 font-semibold"
                     : "text-gray-800 hover:bg-gray-100"
