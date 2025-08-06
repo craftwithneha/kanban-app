@@ -63,11 +63,13 @@ export default function KanbanBoard() {
         const user = await getCurrentUser();
         if (!user) return;
 
-        const response = await databases.listDocuments(
-          DATABASE_ID,
-          COLLECTION_ID,
-          [Query.equal("userId", user.$id)]
-        );
+       const response = await databases.listDocuments(
+  DATABASE_ID,
+  COLLECTION_ID,
+  [Query.limit(100)] // or higher, if needed
+);
+
+
 
         const newColumns: Columns = {
           todo: { title: "To Do", items: [] },
