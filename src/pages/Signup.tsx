@@ -1,7 +1,7 @@
 // src/pages/Signup.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createAccount } from "../auth";
+import {  createAccount } from "../auth";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ export default function Signup() {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

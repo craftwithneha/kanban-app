@@ -1,3 +1,7 @@
+
+
+
+
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TaskCard from "./TaskCard";
@@ -6,9 +10,10 @@ import type { Task } from "../types/types";
 type DraggableCardProps = {
   item: Task & { index: number };
   columnId: string;
+  users: string[];
 };
 
-export default function DraggableCard({ item, columnId }: DraggableCardProps) {
+export default function DraggableCard({ item, columnId, users }: DraggableCardProps) {
   const {
     attributes,
     listeners,
@@ -23,21 +28,25 @@ export default function DraggableCard({ item, columnId }: DraggableCardProps) {
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition: transition || "transform 200ms ease",
     zIndex: isDragging ? 50 : 1,
-    opacity: isDragging ? 0.7 : 1,
+    opacity: isDragging ? 0.85 : 1,
     cursor: isDragging ? "grabbing" : "grab",
+    boxShadow: isDragging
+      ? "0 8px 20px rgba(0, 0, 0, 0.2)"
+      : "0 2px 6px rgba(0, 0, 0, 0.05)",
+    borderRadius: "12px",
   };
 
   return (
     <div
       ref={setNodeRef}
       style={style}
-      {...listeners}
       {...attributes}
-      className="touch-none select-none"
+      {...listeners}
+      className="touch-none select-none transition-transform duration-200 ease-in-out"
     >
-      <TaskCard task={item} />
+      <TaskCard task={item} users={users} />
     </div>
   );
 }

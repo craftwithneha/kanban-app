@@ -10,7 +10,6 @@ import { account } from "./auth";
 
 import Signup from "./pages/Signup.tsx";
 import Login from "./pages/Login.tsx";
-
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";

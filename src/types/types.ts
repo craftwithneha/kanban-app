@@ -5,11 +5,10 @@ export type Task = {
   description: string;
   date?: string;
   tag?: string;
-  avatars?: string[];
-  linkedin?: string;
-  github?: string;
-  comments?: number;
-  index?: number;
+  createdBy?: string; // 👤 New
+  assignedTo?: string;
+
+  
 };
 
 export type Column = {
