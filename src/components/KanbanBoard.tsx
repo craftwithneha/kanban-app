@@ -1,7 +1,4 @@
 
-
-
-
 import { Query } from "appwrite";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import {
@@ -211,6 +208,53 @@ export default function KanbanBoard() {
     }
   };
 
+
+  const handleDeleteTask = async (taskId: string, columnId: keyof Columns) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+    if (!confirmDelete) return;
+    try {
+      await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, taskId);
+      setColumns((prev) => ({
+        ...prev,
+        [columnId]: {
+          ...prev[columnId],
+          items: prev[columnId].items.filter((item) => item.id !== taskId),
+        },
+      }));
+      toast.success("✅ Task deleted!");
+    } catch (err) {
+      console.error("Error deleting task:", err);
+      toast.error("❌ Failed to delete task");
+    }
+  };
+
+const handleAssignUser = async (
+  taskId: string,
+  columnId: keyof Columns,
+  newAssignedTo: string
+) => {
+  try {
+    await databases.updateDocument(DATABASE_ID, COLLECTION_ID, taskId, {
+      assignedTo: newAssignedTo,
+    });
+
+    setColumns((prev) => ({
+      ...prev,
+      [columnId]: {
+        ...prev[columnId],
+        items: prev[columnId].items.map((item) =>
+          item.id === taskId ? { ...item, assignedTo: newAssignedTo } : item
+        ),
+      },
+    }));
+
+    toast.success(`✅ Task assigned to ${newAssignedTo}`);
+  } catch (err) {
+    console.error("Error updating assignedTo", err);
+    toast.error("❌ Failed to assign task");
+  }
+};
+
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <div className="py-10 px-4 sm:px-8">
@@ -238,8 +282,13 @@ export default function KanbanBoard() {
                     key={item.id}
                     item={{ ...item, index: i }}
                     columnId={columnId}
-                    users={users.map((u) => u.name)} // map to names only for TaskCard
+                    users={users}
+                    onDelete={() => handleDeleteTask(item.id, columnId as keyof Columns)}
+                    onAssign={(newUserId) => handleAssignUser(item.id, columnId as keyof Columns, newUserId)}
                   />
+
+
+                
                 ))}
               </Column>
             </SortableContext>

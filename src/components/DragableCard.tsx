@@ -1,16 +1,29 @@
-
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TaskCard from "./TaskCard";
 import type { Task } from "../types/types";
 
+
+type UserInfo = {
+  id: string;
+  name: string;
+};
+
 type DraggableCardProps = {
   item: Task & { index: number };
   columnId: string;
-  users: string[];
+  users: UserInfo[];
+  onDelete: () => void;
+  onAssign: (userId: string) => void;
 };
 
-export default function DraggableCard({ item, columnId, users }: DraggableCardProps) {
+export default function DraggableCard({
+  item,
+  columnId,
+  users,
+  onDelete,
+  onAssign,
+}: DraggableCardProps) {
   const {
     attributes,
     listeners,
@@ -35,8 +48,6 @@ export default function DraggableCard({ item, columnId, users }: DraggableCardPr
     borderRadius: "12px",
   };
 
-  
-
   return (
     <div
       ref={setNodeRef}
@@ -45,7 +56,7 @@ export default function DraggableCard({ item, columnId, users }: DraggableCardPr
       {...listeners}
       className="touch-none select-none transition-transform duration-200 ease-in-out"
     >
-      <TaskCard task={item} users={users} />
+      <TaskCard task={item} users={users} onDelete={onDelete} onAssign={onAssign} />
     </div>
   );
 }

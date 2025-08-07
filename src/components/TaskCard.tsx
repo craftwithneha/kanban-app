@@ -1,18 +1,22 @@
 import { Trash2 } from "lucide-react";
-
-
-
 import { format } from "date-fns";
-import { toast } from "sonner";
-import { databases } from "../appwrite";
 import type { Task } from "../types/types";
+
+
+type UserInfo = {
+  id: string;
+  name: string;
+};
 
 type TaskCardProps = {
   task: Task;
-  users: string[];
+  users: UserInfo[];
+  onDelete: () => void;
+  onAssign: (userId: string) => void;
 };
 
-export default function TaskCard({ task, users }: TaskCardProps) {
+
+export default function TaskCard({ task, users, onDelete, onAssign }: TaskCardProps) {
   const formattedDate = task.date
     ? format(new Date(task.date), "dd MMM yyyy")
     : "";
@@ -23,30 +27,16 @@ export default function TaskCard({ task, users }: TaskCardProps) {
   <div className="flex justify-between items-start">
     <h2 className="font-bold text-m text-gray-900">{task.title}</h2>
     <button
-      onClick={async () => {
-        const confirm = window.confirm("Are you sure you want to delete this task?");
-        if (!confirm) return;
+  onClick={() => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+    if (confirmDelete) onDelete();
+  }}
+  className="text-red-500 hover:text-red-700"
+  title="Delete Task"
+>
+  <Trash2 className="w-4 h-4" />
+</button>
 
-        try {
-          await databases.deleteDocument(
-            import.meta.env.VITE_APPWRITE_DATABASE_ID!,
-            import.meta.env.VITE_APPWRITE_COLLECTION_ID!,
-            task.id
-          );
-          toast.success("✅ Task deleted!");
-
-          // Optional: trigger a re-render
-          window.location.reload(); // or use state-lifting if you want smoother UX
-        } catch (err) {
-          console.error("Error deleting task:", err);
-          toast.error("❌ Failed to delete task");
-        }
-      }}
-      className="text-red-500 hover:text-red-700"
-      title="Delete Task"
-    >
-      <Trash2 className="w-4 h-4" />
-    </button>
   </div>
 
   {/* Description */}
@@ -59,26 +49,12 @@ export default function TaskCard({ task, users }: TaskCardProps) {
     <select
       className="text-xs border border-gray-300 rounded p-1 w-full"
       value={task.assignedTo}
-      onChange={async (e) => {
-        const newAssignedTo = e.target.value;
-        try {
-          await databases.updateDocument(
-            import.meta.env.VITE_APPWRITE_DATABASE_ID!,
-            import.meta.env.VITE_APPWRITE_COLLECTION_ID!,
-            task.id,
-            { assignedTo: newAssignedTo }
-          );
-          toast.success(`✅ Task assigned to ${newAssignedTo}`);
-        } catch (err) {
-          console.error("Error updating assignedTo", err);
-          toast.error("❌ Failed to assign task");
-        }
-      }}
+      onChange={(e) => onAssign(e.target.value)}
     >
       <option value="">Assign to</option>
       {users.map((user) => (
-        <option key={user} value={user}>
-          {user}
+        <option key={user.id} value={user.id}>
+          {user.name}
         </option>
       ))}
     </select>
