@@ -1,8 +1,9 @@
+
+
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TaskCard from "./TaskCard";
 import type { Task } from "../types/types";
-
 
 type UserInfo = {
   id: string;
@@ -15,6 +16,7 @@ type DraggableCardProps = {
   users: UserInfo[];
   onDelete: () => void;
   onAssign: (userId: string) => void;
+  onTaskClick: (task: Task) => void; // ✅ New prop for opening modal
 };
 
 export default function DraggableCard({
@@ -23,6 +25,7 @@ export default function DraggableCard({
   users,
   onDelete,
   onAssign,
+  onTaskClick,
 }: DraggableCardProps) {
   const {
     attributes,
@@ -56,7 +59,13 @@ export default function DraggableCard({
       {...listeners}
       className="touch-none select-none transition-transform duration-200 ease-in-out"
     >
-      <TaskCard task={item} users={users} onDelete={onDelete} onAssign={onAssign} />
+      <TaskCard
+        task={item}
+        users={users}
+        onDelete={onDelete}
+        onAssign={onAssign}
+        onTaskClick={() => onTaskClick(item)} // ✅ Pass click event
+      />
     </div>
   );
 }

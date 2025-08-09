@@ -284,8 +284,9 @@ const handleAssignUser = async (
                     columnId={columnId}
                     users={users}
                     onDelete={() => handleDeleteTask(item.id, columnId as keyof Columns)}
-                    onAssign={(newUserId) => handleAssignUser(item.id, columnId as keyof Columns, newUserId)}
-                  />
+                    onAssign={(newUserId) => handleAssignUser(item.id, columnId as keyof Columns, newUserId)} onTaskClick={function (): void {
+                      throw new Error("Function not implemented.");
+                    } }                  />
 
 
                 

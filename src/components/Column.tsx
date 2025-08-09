@@ -1,5 +1,4 @@
 
-
 import { account } from "../appwrite";
 import { Plus } from "lucide-react";
 import { useDroppable } from "@dnd-kit/core";
@@ -24,7 +23,7 @@ export default function Column({ id, title, children, onAddTask }: ColumnProps) 
     description: "",
     date: "",
     createdBy: "",
-    assignedTo: "", // ✅ added to match task structure
+    assignedTo: "",
   });
 
   const handleSubmit = async () => {
@@ -121,7 +120,6 @@ export default function Column({ id, title, children, onAddTask }: ColumnProps) 
             </div>
           </div>
         )}
-        
 
         <div ref={setNodeRef} className="space-y-4 min-h-[200px]">
           {children}
